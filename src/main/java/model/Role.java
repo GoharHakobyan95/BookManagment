@@ -1,4 +1,4 @@
-package homework.books.model;
+package model;
 
 public enum Role {
     ADMIN,

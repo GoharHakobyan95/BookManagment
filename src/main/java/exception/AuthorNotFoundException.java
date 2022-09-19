@@ -1,4 +1,4 @@
-package homework.books.exception;
+package exception;
 
 public class AuthorNotFoundException extends Exception {
 

@@ -1,6 +1,6 @@
-package homework.books.storage;
+package storage;
 
-import homework.books.model.User;
+import model.User;
 
 public class UserStorage {
     private User[] array = new User[10];

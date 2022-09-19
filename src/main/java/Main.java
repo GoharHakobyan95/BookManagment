@@ -1,16 +1,15 @@
-package homework.books;
+import command.Commands;
+import command.UserCommands;
+import exception.AuthorNotFoundException;
+import model.*;
+import storage.AuthorStorage;
+import storage.BookStorage;
+import storage.UserStorage;
 
-import homework.books.command.Commands;
-import homework.books.exception.AuthorNotFoundException;
-import homework.books.model.*;
-import homework.books.storage.AuthorStorage;
-import homework.books.storage.BookStorage;
-import homework.books.storage.UserStorage;
-
-
+import java.io.IOException;
 import java.util.Scanner;
 
-public class BookDemo implements Commands {
+public class Main implements Commands, UserCommands {
     private static Scanner scanner = new Scanner(System.in);
     private static BookStorage bookStorage = new BookStorage();
     private static AuthorStorage authorStorage = new AuthorStorage();
@@ -104,7 +103,7 @@ public class BookDemo implements Commands {
                 command = -1;
             }
             switch (command) {
-                case LOGOUT:
+                case Commands.LOGOUT:
                     currentUser = null;
                     run = false;
                     break;
@@ -114,20 +113,23 @@ public class BookDemo implements Commands {
                 case ADD_AUTHOR:
                     addAuthor();
                     break;
-                case PRINT_ALL_BOOKS:
+                case Commands.PRINT_ALL_BOOKS:
                     bookStorage.print();
                     break;
-                case PRINT_BOOKS_BY_AUTHOR_NAME:
+                case Commands.PRINT_BOOKS_BY_AUTHOR_NAME:
                     printBooksByAuthorName();
                     break;
-                case PRINT_BOOKS_BY_GENRE:
+                case Commands.PRINT_BOOKS_BY_GENRE:
                     printBooksByGenre();
                     break;
-                case PRINT_BOOKS_BY_PRICE_RANGE:
+                case Commands.PRINT_BOOKS_BY_PRICE_RANGE:
                     printBooksByPriceRange();
                     break;
                 case DELETE_AUTHOR_BY_INDEX:
                     deleteAuthor();
+                    break;
+                case Commands.DOWNLOAD_BOOKS_EXCEL:
+                    downloadBooksExcel();
                     break;
                 default:
                     System.out.println("Invalid command, please try again. ");
@@ -142,33 +144,48 @@ public class BookDemo implements Commands {
         boolean run = true;
         while (run) {
             int command;
-            Commands.printUserCommands();
+            UserCommands.printUserCommands();
             try {
                 command = Integer.parseInt(scanner.nextLine());
             } catch (NumberFormatException e) {
                 command = -1;
             }
             switch (command) {
-                case LOGOUT:
+                case UserCommands.LOGOUT:
+                    LOGOUT:
                     currentUser = null;
                     run = false;
                     break;
-                case PRINT_ALL_BOOKS:
+                case UserCommands.PRINT_ALL_BOOKS:
                     bookStorage.print();
                     break;
-                case PRINT_BOOKS_BY_AUTHOR_NAME:
+                case UserCommands.PRINT_BOOKS_BY_AUTHOR_NAME:
                     printBooksByAuthorName();
                     break;
-                case PRINT_BOOKS_BY_GENRE:
+                case UserCommands.PRINT_BOOKS_BY_GENRE:
                     printBooksByGenre();
                     break;
-                case PRINT_BOOKS_BY_PRICE_RANGE:
+                case UserCommands.PRINT_BOOKS_BY_PRICE_RANGE:
                     printBooksByPriceRange();
+                    break;
+                case UserCommands.DOWNLOAD_BOOKS_EXCEL:
+                    downloadBooksExcel();
                     break;
                 default:
                     System.out.println("Invalid command, please try again. ");
                     break;
             }
+        }
+    }
+
+
+    private static void downloadBooksExcel() {
+        System.out.println("Please input file location. ");
+        String fileDir = scanner.nextLine();
+        try {
+            authorStorage.writeAuthorsToExcel(fileDir);
+        } catch (IOException | RuntimeException e) {
+            e.printStackTrace();
         }
     }
 

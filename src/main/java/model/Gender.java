@@ -1,4 +1,5 @@
-package homework.books.model;
+package model;
+
 
 public enum Gender {
     MALE,

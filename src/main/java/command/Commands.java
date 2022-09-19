@@ -1,4 +1,4 @@
-package homework.books.command;
+package command;
 
 public interface Commands {
     int LOGOUT = 0;
@@ -9,6 +9,7 @@ public interface Commands {
     int PRINT_BOOKS_BY_GENRE = 5;
     int PRINT_BOOKS_BY_PRICE_RANGE = 6;
     int DELETE_AUTHOR_BY_INDEX = 7;
+    int DOWNLOAD_BOOKS_EXCEL = 8;
 
 
     int EXIT = 0;
@@ -22,21 +23,16 @@ public interface Commands {
     }
 
     static void printAdminCommands() {
-        System.out.println("Please input " + Commands.LOGOUT + " for logout ");
-        System.out.println("Please input " + Commands.ADD_BOOK + " for add book ");
-        System.out.println("Please input " + Commands.ADD_AUTHOR + " for add author");
-        System.out.println("Please input " + Commands.PRINT_ALL_BOOKS + " for print all books ");
-        System.out.println("Please input " + Commands.PRINT_BOOKS_BY_AUTHOR_NAME + " for print books by author name ");
-        System.out.println("Please input " + Commands.PRINT_BOOKS_BY_GENRE + " for print books by genre ");
-        System.out.println("Please input " + Commands.PRINT_BOOKS_BY_PRICE_RANGE + " for print books by price range ");
-        System.out.println("Please input " + Commands.DELETE_AUTHOR_BY_INDEX + " for delete author ");
+        System.out.println("Please input " + LOGOUT + " for logout ");
+        System.out.println("Please input " + ADD_BOOK + " for add book ");
+        System.out.println("Please input " + ADD_AUTHOR + " for add author");
+        System.out.println("Please input " + PRINT_ALL_BOOKS + " for print all books ");
+        System.out.println("Please input " + PRINT_BOOKS_BY_AUTHOR_NAME + " for print books by author name ");
+        System.out.println("Please input " + PRINT_BOOKS_BY_GENRE + " for print books by genre ");
+        System.out.println("Please input " + PRINT_BOOKS_BY_PRICE_RANGE + " for print books by price range ");
+        System.out.println("Please input " + DELETE_AUTHOR_BY_INDEX + " for delete author ");
+        System.out.println("Please input " + DOWNLOAD_BOOKS_EXCEL + " for download book's excel file ");
     }
 
-    static void printUserCommands() {
-        System.out.println("Please input " + Commands.LOGOUT + " for logout ");
-        System.out.println("Please input " + Commands.PRINT_ALL_BOOKS + " for print all books ");
-        System.out.println("Please input " + Commands.PRINT_BOOKS_BY_AUTHOR_NAME + " for print books by author name ");
-        System.out.println("Please input " + Commands.PRINT_BOOKS_BY_GENRE + " for print books by genre ");
-        System.out.println("Please input " + Commands.PRINT_BOOKS_BY_PRICE_RANGE + " for print books by price range ");
-    }
+
 }

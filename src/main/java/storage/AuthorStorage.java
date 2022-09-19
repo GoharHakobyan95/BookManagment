@@ -1,7 +1,18 @@
-package homework.books.storage;
+package storage;
 
-import homework.books.exception.AuthorNotFoundException;
-import homework.books.model.Author;
+import exception.AuthorNotFoundException;
+import model.Author;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
 
 public class AuthorStorage {
     private Author[] array = new Author[10];
@@ -63,6 +74,41 @@ public class AuthorStorage {
             return array[authorIndex];
         }
     }
+
+    public void writeAuthorsToExcel(String fileDir) throws IOException {
+        File directory = new File(fileDir);
+        if (directory.isFile()) {
+            throw new RuntimeException("fileDir must be a directory");
+        }
+        File excelFile = new File(directory, "authors_" + System.currentTimeMillis() + ".xlsx");
+        excelFile.createNewFile();
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet();
+        Row headerRow = sheet.createRow(0);
+        Cell cellName = headerRow.createCell(0);
+        cellName.setCellValue("name");
+
+        Cell cellSurname = headerRow.createCell(1);
+        cellSurname.setCellValue("surname");
+
+        Cell cellEmail = headerRow.createCell(2);
+        cellEmail.setCellValue("email");
+
+        Cell cellGender = headerRow.createCell(3);
+        cellGender.setCellValue("gender");
+
+        for (int i = 0; i < size; i++) {
+            Author author = array[i];
+            Row row = sheet.createRow(i + 1);
+            row.createCell(0).setCellValue(author.getName());
+            row.createCell(1).setCellValue(author.getSurname());
+            row.createCell(2).setCellValue(author.getEmail());
+            row.createCell(3).setCellValue(author.getGender().name());
+        }
+        workbook.write(Files.newOutputStream(excelFile.toPath()));
+        System.out.println("File has been successfully uploaded.");
+    }
+
 }
 
 
